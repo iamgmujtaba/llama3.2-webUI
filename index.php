@@ -4,9 +4,9 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Ask Llama 3.2</title>
-    <meta name="description" content="A multimodal web UI for interacting with the Llama 3.2 model using Ollama. It can process text, images, and more.">
-    <meta name="keywords" content="Llama3.2, Ollama, AI, Multimodal, Web-UI">
+    <title>Ask LLaMa 3.2</title>
+    <meta name="description" content="A multimodal web UI for interacting with the LLaMa 3.2 model using Ollama. It can process text, images, and more.">
+    <meta name="keywords" content="LLaMa3.2, Ollama, AI, Multimodal, Web-UI">
     <meta name="author" content="QuantumByteStudios">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Bootstrap 5 Stylesheet -->
@@ -22,7 +22,7 @@
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
             <a class="navbar-brand" href=".">
-                <h2><b>llama3.2-web-ui</b></h2>
+                <h2><b>LLaMa3.2-web-ui</b></h2>
             </a>
 
             <ul class="navbar-nav">
@@ -42,7 +42,7 @@
         <!-- User Input Form -->
         <form action="" method="POST" enctype="multipart/form-data" id="llamaForm">
             <div class="mb-3">
-                <label for="promptInput" class="form-label">Ask Llama (Text or Image):</label>
+                <label for="promptInput" class="form-label">Ask LLaMa (Text or Image):</label>
                 <textarea class="form-control" id="promptInput" name="prompt" placeholder="Ask something..." rows="3"></textarea>
             </div>
             <div class="mb-3">
@@ -65,7 +65,7 @@
                 }
 
                 function processImage($imagePath) {
-                    // Process the image through Llama3.2
+                    // Process the image through LLaMa3.2
                     $command = 'ollama run llama3.2 --input ' . escapeshellarg($imagePath);
                     $output = shell_exec($command);
                     return nl2br(htmlspecialchars($output));
@@ -92,7 +92,7 @@
                         }
                     }
                 } else {
-                    echo 'Ask Llama something or upload an image to analyze!';
+                    echo 'Ask LLaMa something or upload an image to analyze!';
                 }
                 ?>
             </div>
