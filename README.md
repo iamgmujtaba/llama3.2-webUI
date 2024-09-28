@@ -58,7 +58,6 @@ Once the interface loads in your browser, you can:
 
 ## Screenshots
 
-### 1. **Prompt: "Hello World in C++"**
 ![homepage](/assets/home_webui.png)
 
 ![response](/assets/home_webui_res.png)
