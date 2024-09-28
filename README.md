@@ -1,14 +1,14 @@
 
-# User friendly LLaMa3.2 Multimodal Web UI using Ollama
+# User-friendly LLaMa 3.2 Multimodal Web UI using Ollama
 
-**LLaMa 3.2 Multimodal Web UI** is a user-friendly interface for interacting with the **Ollama** platform’s **LLaMa 3.2 multimodal model**, which supports both **text** and **image** inputs. This versatile interface allows users to ask questions, submit prompts, and receive responses in the form of text, code, and even visual outputs, harnessing the power of **multimodal AI**.
+LLaMa 3.2 Multimodal Web UI is user-friendly interface for interacting with the Ollama platform's LLaMa 3.2 multimodal model. It effortlessly supports text and image inputs, allowing users to ask questions, submit prompts, and receive responses in text, code, and even visual outputs, making the power of multimodal AI accessible to all.
 
-This code is tested on Ubuntu.
+This code is tested on Ubuntu OS.
 
 
 ## Features
 
-- **Multimodal Input Support**: Submit both text and image inputs to receive context-aware responses.
+- **Multimodal Input Support**: Submit text and image inputs to receive context-aware responses.
 - **Formatted Responses**: Highlighted code blocks and detailed explanations for code outputs.
 - **Copy-to-Clipboard**: Easily copy code snippets directly from the UI for seamless integration into your projects.
 - **Responsive UI**: Optimized for both desktop and mobile devices.
@@ -53,15 +53,15 @@ Once the interface loads in your browser, you can:
 ### 2. Viewing Responses
 - **Formatted Text**: Responses are displayed in a clean, readable format.
 - **Highlighted Code**: Any code snippets returned are syntax-highlighted for better readability.
-- **Multimodal Responses**: When image inputs are supported, you will also receive generated images, annotations, or detailed explanations of the content.
+- **Multimodal Responses**: When image inputs are supported, you will also receive generated images, annotations, or detailed content explanations.
 
 
 ## Screenshots
 
 ### 1. **Prompt: "Hello World in C++"**
-![homepage](/assests/home_webui.png)
+![homepage](/assets/home_webui.png)
 
-![response](/assests/home_webui_res.png)
+![response](/assets/home_webui_res.png)
 
 
 ## Contributing
