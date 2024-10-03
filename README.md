@@ -1,7 +1,7 @@
 
 # User-friendly LLaMa 3.2 Multimodal Web UI using Ollama
 
-LLaMa 3.2 Multimodal Web UI is user-friendly interface for interacting with the Ollama platform's LLaMa 3.2 multimodal model. It effortlessly supports text and image inputs, allowing users to ask questions, submit prompts, and receive responses in text, code, and even visual outputs, making the power of multimodal AI accessible to all.
+LLaMa 3.2 Multimodal Web UI is a user-friendly interface for interacting with the Ollama platform. It effortlessly supports text and image inputs, allowing users to ask questions, submit prompts, and receive responses in text, code, and even visual outputs, making the power of multimodal AI accessible to all.
 
 This code is tested on Ubuntu OS.
 
