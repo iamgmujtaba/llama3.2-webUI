@@ -41,6 +41,14 @@ To run CodeLlama Multimodal Web UI locally, follow these steps:
 
    This will start the local development server and automatically open the application in your default web browser at `http://localhost:8000`.
 
+The application uses **Ollama as its provider** and sends requests to the local Ollama API using the `llama3.2` model. Download the model before starting the app:
+
+```bash
+ollama pull llama3.2
+```
+
+Ollama must be running at `http://127.0.0.1:11434` (the default Ollama address).
+
 ## Usage
 
 ### 1. Interacting with the UI
@@ -70,4 +78,3 @@ Contributions are always welcome.
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
-
