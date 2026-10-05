@@ -57,36 +57,72 @@
             <h5>Response:</h5>
             <div id="responseContent">
                 <?php
-                function processText($prompt) {
-                    // Run the prompt through the multimodal model
-                    $command = 'ollama run llama3.2 "' . $prompt . '"';
-                    $output = shell_exec($command);
-                    return nl2br(htmlspecialchars($output));
+                const OLLAMA_HOST = 'http://127.0.0.1:11434';
+                const OLLAMA_MODEL = 'llama3.2';
+
+                function processWithLlama($prompt, $imagePath = null) {
+                    $request = [
+                        'model' => OLLAMA_MODEL,
+                        'prompt' => $prompt,
+                        'stream' => false,
+                    ];
+
+                    if ($imagePath !== null) {
+                        $request['images'] = [base64_encode(file_get_contents($imagePath))];
+                    }
+
+                    $context = stream_context_create([
+                        'http' => [
+                            'method' => 'POST',
+                            'header' => "Content-Type: application/json\r\n",
+                            'content' => json_encode($request),
+                            'timeout' => 120,
+                            'ignore_errors' => true,
+                        ],
+                    ]);
+                    $response = file_get_contents(OLLAMA_HOST . '/api/generate', false, $context);
+
+                    if ($response === false) {
+                        return 'Unable to connect to Ollama. Make sure it is running on ' . OLLAMA_HOST . '.';
+                    }
+
+                    $payload = json_decode($response, true);
+                    if (!is_array($payload) || !empty($payload['error'])) {
+                        return 'Llama 3.2 provider error: ' . ($payload['error'] ?? 'Invalid response from Ollama.');
+                    }
+
+                    return $payload['response'] ?? 'The Llama 3.2 provider returned an empty response.';
                 }
 
-                function processImage($imagePath) {
-                    // Process the image through LLaMa3.2
-                    $command = 'ollama run llama3.2 --input ' . escapeshellarg($imagePath);
-                    $output = shell_exec($command);
-                    return nl2br(htmlspecialchars($output));
+                function formatResponse($response) {
+                    return nl2br(htmlspecialchars($response, ENT_QUOTES, 'UTF-8'));
                 }
 
                 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                    $prompt = isset($_POST['prompt']) ? htmlspecialchars($_POST['prompt']) : '';
-                    $uploadedFile = $_FILES['inputFile'];
+                    $prompt = trim($_POST['prompt'] ?? '');
+                    $uploadedFile = $_FILES['inputFile'] ?? [];
 
                     // Handle text input
                     if (!empty($prompt)) {
-                        echo '<b>You:</b> ' . $prompt . '<br><b>Response:</b> ' . processText($prompt);
+                        echo '<b>You:</b> ' . htmlspecialchars($prompt, ENT_QUOTES, 'UTF-8') .
+                            '<br><b>Response:</b> ' . formatResponse(processWithLlama($prompt));
                     }
 
                     // Handle file upload
-                    if (!empty($uploadedFile['tmp_name'])) {
-                        $targetDir = "uploads/";
-                        $filePath = $targetDir . basename($uploadedFile['name']);
+                    if (!empty($uploadedFile['tmp_name']) && is_uploaded_file($uploadedFile['tmp_name'])) {
+                        $targetDir = __DIR__ . '/uploads/';
+                        if (!is_dir($targetDir)) {
+                            mkdir($targetDir, 0755, true);
+                        }
+                        $extension = strtolower(pathinfo($uploadedFile['name'] ?? '', PATHINFO_EXTENSION));
+                        $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+                        $fileName = bin2hex(random_bytes(16)) . ($extension && in_array($extension, $allowedExtensions, true) ? '.' . $extension : '');
+                        $filePath = $targetDir . $fileName;
                         if (move_uploaded_file($uploadedFile['tmp_name'], $filePath)) {
-                            echo '<br><b>Image Uploaded:</b> <img src="' . $filePath . '" width="200px"><br>';
-                            echo '<b>Response:</b> ' . processImage($filePath);
+                            $imagePrompt = $prompt ?: 'Describe this image.';
+                            echo '<br><b>Image Uploaded:</b><br>';
+                            echo '<b>Response:</b> ' . formatResponse(processWithLlama($imagePrompt, $filePath));
+                            unlink($filePath);
                         } else {
                             echo '<br>Error uploading the image.';
                         }
